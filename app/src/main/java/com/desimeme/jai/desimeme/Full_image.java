@@ -42,6 +42,13 @@ public class Full_image extends ActionBarActivity {
         return true;
     }
 
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -49,37 +56,50 @@ public class Full_image extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_share) {
-            return true;
-        }
+       // if (id == R.id.action_share) {
+         //   return true;
+        //}
 
         // Handle item selection
-        ImageView image = (ImageView) findViewById(R.id.full_image_view);
-        Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap(); //file to be saved as per user selection
-        File sd = Environment.getExternalStorageDirectory();
-        String fileName = "test.png"; //saved as png file
-        File dest = new File(sd, fileName);
-        try {
-            FileOutputStream out;
-            out = new FileOutputStream(dest);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            out.flush();
-            out.close();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         switch (item.getItemId()) {
             case R.id.action_share:
-                Uri uri = Uri.fromFile(dest);
-                Intent shareIntent = new Intent();
-                shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                shareIntent.setType("image/png");
-                startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.action_share))); //shared via Intent
+                // Handle item selection
+                ImageView image = (ImageView) findViewById(R.id.full_image_view);
+                Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap(); //file to be saved as per user selection
+                if (isExternalStorageWritable()) {
+                    String sd = Environment.getExternalStorageDirectory().getAbsolutePath();
+                    File ssd = new File(sd, "share");
+                    if (!ssd.exists())
+                        ssd.mkdirs();
+                    String fileName = "temp"; //saved as png file
+                    File dest = new File(ssd, fileName + ".jpg");
+                    FileOutputStream out = null;
+                    if (dest.canWrite()) {
+                        dest.setWritable(true);
+                    }
+                    try {
+                        out = new FileOutputStream(dest);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
+                        // PNG is a lossless format, the compression factor (100) is ignored
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            if (out != null) {
+                                out.close();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    Uri uri = Uri.fromFile(dest);
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.setType("*/*");
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                    startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.action_share))); //shared via Intent
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -87,3 +107,4 @@ public class Full_image extends ActionBarActivity {
     }
 
 }
+
