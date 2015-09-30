@@ -1,10 +1,7 @@
 package com.desimeme.jai.desimeme;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -61,11 +58,9 @@ public class Full_image extends ActionBarActivity {
         Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
         // Find the SD Card path
 
-        File filepath = Environment.getExternalStorageDirectory();
-
         // Create a new folder in SD Card
-        File dir = new File(filepath.getAbsolutePath()
-                + "desi");
+        File dir = new File(Environment.getExternalStorageDirectory() + "/desiCache");
+
         dir.mkdirs();
 
         // Create a name for the saved image
