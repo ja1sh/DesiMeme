@@ -2,8 +2,8 @@
 <resources>
 
     <string name="app_name">Desi Meme</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_share">Share This!!</string>
+
+    <string name="action_share">Share Via!!</string>
 
 
 </resources>

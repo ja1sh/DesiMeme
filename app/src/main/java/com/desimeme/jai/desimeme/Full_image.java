@@ -1,8 +1,10 @@
 package com.desimeme.jai.desimeme;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 
 public class Full_image extends ActionBarActivity {
@@ -43,30 +46,40 @@ public class Full_image extends ActionBarActivity {
         return true;
     }
 
-    private boolean shouldReturnResult() {
-        Intent intent = getIntent();
-        if (intent!=null && intent.getType()!=null) {
-            return intent.getType().indexOf("*/*") != -1;
-        } else {
-            return false;
-        }
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
+
+
+        OutputStream output;
+
+
+        // Retrieve the image from the res folder
         ImageView image = (ImageView) findViewById(R.id.full_image_view);
         Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
+        // Find the SD Card path
 
-        File sd = Environment.getExternalStorageDirectory();
-        String fileName = "desi.png";
-        File dest = new File(sd, fileName);
+        File filepath = Environment.getExternalStorageDirectory();
+
+        // Create a new folder in SD Card
+        File dir = new File(filepath.getAbsolutePath()
+                + "desi");
+        dir.mkdirs();
+
+        // Create a name for the saved image
+        File file = new File(dir, "temp.png");
+
+
         try {
-            FileOutputStream out;
-            out = new FileOutputStream(dest);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            out.flush();
-            out.close();
+
+            output = new FileOutputStream(file);
+
+            // Compress into png format image from 0% - 100%
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+            output.flush();
+            output.close();
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -76,12 +89,12 @@ public class Full_image extends ActionBarActivity {
         }
         switch (item.getItemId()) {
             case R.id.action_share:
-                Uri uri = Uri.fromFile(dest);
+                Uri uri = Uri.fromFile(file);
 
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
                     shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                    shareIntent.setType("*/*");
+                    shareIntent.setType("image/png");
                     startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.action_share)));
                 }
         return true;
