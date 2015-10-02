@@ -34,6 +34,9 @@ public class Full_image extends ActionBarActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.full_image_view);
         imageView.setImageResource(imageAdapter.mThumbIds[position]);
+
+
+
     }
 
 
@@ -41,17 +44,14 @@ public class Full_image extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
 
-
         OutputStream output;
-
 
         // Retrieve the image from the res folder
         ImageView image = (ImageView) findViewById(R.id.full_image_view);
@@ -87,6 +87,7 @@ public class Full_image extends ActionBarActivity {
                 Uri uri = Uri.fromFile(file);
 
                     Intent shareIntent = new Intent();
+
                     shareIntent.setAction(Intent.ACTION_SEND);
                     shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
                     shareIntent.setType("image/png");
@@ -95,4 +96,5 @@ public class Full_image extends ActionBarActivity {
         return true;
 
         }
-    }
+
+}
