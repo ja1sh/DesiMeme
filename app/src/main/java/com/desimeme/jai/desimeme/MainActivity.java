@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -27,6 +29,9 @@ public class MainActivity extends ActionBarActivity {
         // Instance of ImageAdapter Class
         gridView.setAdapter(new ImageAdapt(this));
 
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fly_from_bottom);
+        gridView.setAnimation(anim);
+        anim.start();
         /**
          * On Click event for Single Gridview Item
          * */

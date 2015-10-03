@@ -9,8 +9,10 @@
 
     <GridLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_centerVertical="true"
+        android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:background="#ffc0c0bc"></GridLayout>
+        android:background="#ffc0c0bc"
+        android:layout_alignParentTop="true">
+
+        </GridLayout>
 </RelativeLayout>
