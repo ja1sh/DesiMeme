@@ -2,8 +2,8 @@
 <resources>
 
 
-    <item name="primaryDarkColor" type="color">#1abc9c</item>
-    <item name="primaryColor" type="color">#16a085</item>
+    <item name="primaryDarkColor" type="color">#16a085</item>
+    <item name="primaryColor" type="color">#1abc9c</item>
     <item name="baseColor" type="color">#ffff</item>
 
 </resources>
