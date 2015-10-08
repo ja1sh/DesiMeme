@@ -7,8 +7,8 @@
     tools:context=".MainActivity"
     >
 
-    <GridLayout
-        android:layout_width="fill_parent"
+
+    <GridLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:background="#ffc0c0bc"
