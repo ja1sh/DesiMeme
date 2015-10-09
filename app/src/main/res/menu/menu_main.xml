@@ -6,6 +6,7 @@
     <item android:id="@+id/action_share"
         android:title="Share"
         android:icon="@android:drawable/ic_menu_share"
+        android:gravity="center_vertical"
         app:showAsAction="always" />
     <item android:id="@+id/action_settings"
         android:title="Info"

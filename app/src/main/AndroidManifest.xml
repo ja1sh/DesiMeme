@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:label="@string/app_name"
+            android:label=""
 
             android:name=".GridAct" >
             <intent-filter >
@@ -33,7 +33,7 @@
                 </intent-filter>
         </activity>
         <activity android:name=".Full_image"
-            android:label="Share This...">
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
